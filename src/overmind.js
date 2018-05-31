@@ -30,7 +30,7 @@ module.exports.loop = function () {
   if (harvesters.length < 3) {
     Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'harvester' });
   } else if (defenders.length < 2){
-    Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'defender' });
+    Game.spawns.Spawn1.createCreep([MOVE, ATTACK, MOVE], undefined, { role: 'defender' });
   } else if (upgraders.length < 3) {
     Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'upgrader' });
   } else if (builders.length < 1) {
