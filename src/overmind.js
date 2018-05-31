@@ -2,6 +2,7 @@ import roleHarvester from './harvester';
 import roleUpgrader from './upgrader';
 import roleBuilder from './builder';
 import roleLogistics from './logistics';
+import roleDefender from './defender';
 import constructionManager from './constructionManager';
 import roleConquistador from './conquistador';
 
