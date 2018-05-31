@@ -1,7 +1,7 @@
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleLogistics = require('role.logistics');
+import roleHarvester from './harvester';
+import roleUpgrader from './upgrader';
+import roleBuilder from './builder';
+import roleLogistics from './logistics';
 
 module.exports.loop = function () {
 
@@ -11,15 +11,15 @@ module.exports.loop = function () {
             console.log('Clearing non-existing creep memory:', name);
         }
     }
-	
+
 	// Get creep type counts.
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var upgraders  = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
     var builders   = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
     var logistics  = _.filter(Game.creeps, (creep) => creep.memory.role == 'logistics');
-	
+
 	console.log('h,u,b, l: ' + harvesters.length + ',' + upgraders.length + ',' + builders.length + ',' + logistics.length);
-	
+
     if(harvesters.length < 3) {
         var newName = Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE], undefined, {role: 'harvester'});
         //console.log('Spawning new harvester: ' + newName);
@@ -34,12 +34,12 @@ module.exports.loop = function () {
         //console.log('Spawning new builder: ' + newName);
     }
 
-    if(Game.spawns['Spawn1'].spawning) { 
+    if(Game.spawns['Spawn1'].spawning) {
         var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
         Game.spawns['Spawn1'].room.visual.text(
             '🛠️' + spawningCreep.memory.role,
-            Game.spawns['Spawn1'].pos.x + 1, 
-            Game.spawns['Spawn1'].pos.y, 
+            Game.spawns['Spawn1'].pos.x + 1,
+            Game.spawns['Spawn1'].pos.y,
             {align: 'left', opacity: 0.8});
     }
 

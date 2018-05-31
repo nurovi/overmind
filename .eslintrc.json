@@ -1,0 +1,21 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "extends": "airbnb-base",
+    "parser": "babel-eslint",
+    "plugins": [
+      "import"
+    ],
+    "rules": {
+        "comma-dangle": ["error", "never"],
+        "eol-last": 0,
+        "import/no-unresolved": "error",
+        "import/no-extraneous-dependencies": "off",
+        "import/order": ["error", {"groups": [["builtin", "external", "internal"], ["sibling", "parent", "index"]], "newlines-between": "always" }],
+        "max-len": 0,
+        "no-restricted-syntax": 0
+    }
+}
