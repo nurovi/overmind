@@ -34,11 +34,22 @@ const conquistador = {
       // find something to attack?
       if (creep.room.controller) {
         // attack controller
-        const err = creep.claimController(creep.room.controller);
-        if (err !== OK) {
-          creep.moveTo(creep.room.controller.pos);
-        }
         console.log(`Attacking ${creep.room.controller} with result ${err}`);
+        if (creep.room.controller.owner && !creep.room.controller.my) {
+          const err = creep.attackController(creep.room.controller);
+          if (err !== OK) {
+            creep.moveTo(creep.room.controller.pos);
+          }
+          console.log(`Attacking ${creep.room.controller} with result ${err}`);
+        } else if (!creep.room.controller.owner) {
+          const err = creep.claimController(creep.room.controller);
+          if (err !== OK) {
+            creep.moveTo(creep.room.controller.pos);
+          }
+          console.log(`Claiming ${creep.room.controller} with result ${err}`);
+        } else {
+          creep.memory.target = undefined;
+        }
       } else {
         // pick another target
         creeps.memory.explored[creep.room.name] = true;

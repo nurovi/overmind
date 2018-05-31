@@ -3,7 +3,7 @@ const roleHarvester = {
   /** @param {Creep} creep * */
   run(creep) {
     if (creep.carry.energy < creep.carryCapacity) {
-      const source = creep.pos.findClosestByRange(FIND_SOURCES);
+      const { source } = creep.memory;
       if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
         creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
       }

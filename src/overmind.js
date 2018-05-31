@@ -22,6 +22,9 @@ module.exports.loop = () => {
   }
 
   for (const roomId in Game.rooms) {
+    const room = Game.rooms[roomId];
+    const sources = room.find(FIND_SOURCES_ACTIVE);
+
     // Get creep type counts.
     const harvesters = _.filter(Game.creeps, creep => creep.memory.role === 'harvester' && creep.memory.homeroom === roomId);
     const upgraders = _.filter(Game.creeps, creep => creep.memory.role === 'upgrader' && creep.memory.homeroom === roomId);
@@ -33,8 +36,9 @@ module.exports.loop = () => {
     console.log(`h,u,b,l,d,c: ${harvesters.length},${upgraders.length},${builders.length},${logistics.length},${defenders.length},${conquistadores.length}`);
 
     if (Game.spawns[roomSpawns[roomId]]) {
-      if (harvesters.length < 3) {
-        Game.spawns[roomSpawns[roomId]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'harvester', homeroom: roomId });
+      if (harvesters.length < 3 * sources.length) {
+        const source = sources[harvesters.length % sources.length];
+        Game.spawns[roomSpawns[roomId]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'harvester', homeroom: roomId, source });
       } else if (defenders.length < 2) {
         Game.spawns[roomSpawns[roomId]].createCreep([MOVE, MOVE, ATTACK, TOUGH], undefined, { role: 'defender', homeroom: roomId });
       } else if (upgraders.length < 3) {
