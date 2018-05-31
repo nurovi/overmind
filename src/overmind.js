@@ -17,7 +17,6 @@ module.exports.loop = () => {
   for (const name in Memory.creeps) {
     if (!Game.creeps[name]) {
       delete Memory.creeps[name];
-      console.log('Clearing non-existing creep memory:', name);
     }
   }
 
@@ -32,8 +31,6 @@ module.exports.loop = () => {
     const logistics = _.filter(Game.creeps, creep => creep.memory.role === 'logistics' && creep.memory.homeroom === roomId);
     const defenders = _.filter(Game.creeps, creep => creep.memory.role === 'defender' && creep.memory.homeroom === roomId);
     const conquistadores = _.filter(Game.creeps, creep => creep.memory.role === 'conquistador' && creep.memory.homeroom === roomId);
-
-    console.log(`h,u,b,l,d,c: ${harvesters.length},${upgraders.length},${builders.length},${logistics.length},${defenders.length},${conquistadores.length}`);
 
     if (Game.spawns[roomSpawns[roomId]]) {
       if (harvesters.length < 3 * sources.length) {

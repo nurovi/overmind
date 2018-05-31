@@ -31,12 +31,7 @@ const constructionManager = {
       const structurePos = path[Math.min(path.length, 3)];
 
       // Place construction site and report errors
-      const err = room.createConstructionSite(structurePos.x, structurePos.y, STRUCTURE_CONTAINER);
-      if (err === 0) {
-        console.log(`Success placing ${STRUCTURE_CONTAINER} in room ${room.name} at pos (${structurePos.x}, ${structurePos.y})`);
-      } else {
-        console.log(`Error (${err}) placing ${STRUCTURE_CONTAINER} in room ${room.name} at pos (${structurePos.x}, ${structurePos.y})`);
-      }
+      room.createConstructionSite(structurePos.x, structurePos.y, STRUCTURE_CONTAINER);
       return;
     }
 
@@ -65,12 +60,7 @@ const constructionManager = {
       }
 
       if (firstFreePos) {
-        const err = room.createConstructionSite(firstFreePos, STRUCTURE_EXTENSION);
-        if (err === 0) {
-          console.log(`success placing ${STRUCTURE_EXTENSION} in room ${room.name} at pos (${firstFreePos.x}, ${firstFreePos.y})`);
-        } else {
-          console.log(`error (${err}) placing ${STRUCTURE_EXTENSION} in room ${room.name} at pos (${firstFreePos.x}, ${firstFreePos.y})`);
-        }
+        room.createConstructionSite(firstFreePos, STRUCTURE_EXTENSION);
       }
     }
   }
