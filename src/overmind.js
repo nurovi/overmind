@@ -4,32 +4,31 @@ import roleBuilder from './builder';
 import roleLogistics from './logistics';
 import constructionManager from './constructionManager';
 
-module.exports.loop = function () {
+module.exports.loop = () => {
+  // activate safe mode if available
+  for (const element in Game.spawns) {
+    Game.spawns[element].room.controller.activateSafeMode();
+  }
 
-    // activate safe mode if available
-    for(var element in Game.spawns){
-        Game.spawns[element].room.controller.activateSafeMode();
+  for (const name in Memory.creeps) {
+    if (!Game.creeps[name]) {
+      delete Memory.creeps[name];
+      console.log('Clearing non-existing creep memory:', name);
     }
+  }
 
-    for(var name in Memory.creeps) {
-        if(!Game.creeps[name]) {
-            delete Memory.creeps[name];
-            console.log('Clearing non-existing creep memory:', name);
-        }
-    }
-
-	// Get creep type counts.
-    const harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
-    const upgraders  = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-    const builders   = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
-    const logistics  = _.filter(Game.creeps, (creep) => creep.memory.role == 'logistics');
-    const defenders  = _.filter(Game.creeps, (creep) => creep.memory.role == 'defender');
+  // Get creep type counts.
+  const harvesters = _.filter(Game.creeps, creep => creep.memory.role === 'harvester');
+  const upgraders = _.filter(Game.creeps, creep => creep.memory.role === 'upgrader');
+  const builders = _.filter(Game.creeps, creep => creep.memory.role === 'builder');
+  const logistics = _.filter(Game.creeps, creep => creep.memory.role === 'logistics');
+  const defenders = _.filter(Game.creeps, creep => creep.memory.role === 'defender');
 
   console.log(`h,u,b, l: ${harvesters.length},${upgraders.length},${builders.length},${logistics.length}`);
 
   if (harvesters.length < 3) {
     Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'harvester' });
-  } else if (defenders.length < 2){
+  } else if (defenders.length < 2) {
     Game.spawns.Spawn1.createCreep([MOVE, MOVE, ATTACK, TOUGH], undefined, { role: 'defender' });
   } else if (upgraders.length < 3) {
     Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'upgrader' });
@@ -65,7 +64,7 @@ module.exports.loop = function () {
       roleBuilder.run(creep);
     } else if (creep.memory.role === 'logistics') {
       roleLogistics.run(creep);
-    } else if(creep.memory.role == 'defender') {
+    } else if (creep.memory.role === 'defender') {
       roleDefender.run(creep);
     }
   }
