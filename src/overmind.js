@@ -7,9 +7,11 @@ import constructionManager from './constructionManager';
 import roleConquistador from './conquistador';
 
 module.exports.loop = () => {
+  var room_spawns = {}
   // activate safe mode if available
   for (const element in Game.spawns) {
     Game.spawns[element].room.controller.activateSafeMode();
+    room_spawns[ Game.spawns[element].room.name ] = element;
   }
 
   for (const name in Memory.creeps) {
@@ -31,17 +33,17 @@ module.exports.loop = () => {
     console.log(`h,u,b, l: ${harvesters.length},${upgraders.length},${builders.length},${logistics.length}`);
 
     if (conquistadores.length < 1) {
-      Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'conquistador' });
-    } else if (harvesters.length < 3) {
-      Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'harvester', homeroom: roomId });
-    } else if (defenders.length < 2) {
-      Game.spawns.Spawn1.createCreep([MOVE, MOVE, ATTACK, TOUGH], undefined, { role: 'defender', homeroom: roomId });
+      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'conquistador' });
+    } else if if (harvesters.length < 3) {
+      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'harvester', homeroom: room_id });
+    } else if (defenders.length < 2){
+      Game.spawns[room_spawns[room_id]].createCreep([MOVE, MOVE, ATTACK, TOUGH], undefined, { role: 'defender', homeroom: room_id  });
     } else if (upgraders.length < 3) {
-      Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'upgrader', homeroom: roomId });
+      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'upgrader', homeroom: room_id  });
     } else if (builders.length < 1) {
-      Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'builder', homeroom: roomId });
+      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'builder', homeroom: room_id  });
     } else if (logistics.length < 1) {
-      Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'logistics', homeroom: roomId });
+      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'logistics', homeroom: room_id  });
     } else {
       // Decide what to construct in each room
       for (const name in Game.spawns) {
@@ -78,4 +80,3 @@ module.exports.loop = () => {
     }
   }
 };
-
