@@ -23,27 +23,27 @@ module.exports.loop = () => {
 
   for (const roomId in Game.rooms) {
     // Get creep type counts.
-    const harvesters = _.filter(Game.creeps, creep => (creep.memory.role === 'harvester' && creep.memory.homeroom === roomId));
-    const upgraders = _.filter(Game.creeps, creep => (creep.memory.role === 'upgrader' && creep.memory.homeroom === roomId));
-    const builders = _.filter(Game.creeps, creep => (creep.memory.role === 'builder' && creep.memory.homeroom === roomId));
-    const logistics = _.filter(Game.creeps, creep => (creep.memory.role === 'logistics' && creep.memory.homeroom === roomId));
-    const defenders = _.filter(Game.creeps, creep => (creep.memory.role === 'defender' && creep.memory.homeroom === roomId));
-    const conquistadores = _.filter(Game.creeps, creep => creep.memory.role === 'conquistador');
+    const harvesters = _.filter(Game.creeps, creep => creep.memory.role === 'harvester' && creep.memory.homeroom === roomId);
+    const upgraders = _.filter(Game.creeps, creep => creep.memory.role === 'upgrader' && creep.memory.homeroom === roomId);
+    const builders = _.filter(Game.creeps, creep => creep.memory.role === 'builder' && creep.memory.homeroom === roomId);
+    const logistics = _.filter(Game.creeps, creep => creep.memory.role === 'logistics' && creep.memory.homeroom === roomId);
+    const defenders = _.filter(Game.creeps, creep => creep.memory.role === 'defender' && creep.memory.homeroom === roomId);
+    const conquistadores = _.filter(Game.creeps, creep => creep.memory.role === 'conquistador' && creep.memory.homeroom === roomId);
 
     console.log(`h,u,b,l,d,c: ${harvesters.length},${upgraders.length},${builders.length},${logistics.length},${defenders.length},${conquistadores.length}`);
 
     if (conquistadores.length < 1) {
-      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'conquistador', homeroom: roomId });
+      Game.spawns[room_spawns[roomId]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'conquistador', homeroom: roomId });
     } else if (harvesters.length < 3) {
-      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'harvester', homeroom: room_id });
+      Game.spawns[room_spawns[roomId]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'harvester', homeroom: roomId });
     } else if (defenders.length < 2) {
-      Game.spawns[room_spawns[room_id]].createCreep([MOVE, MOVE, ATTACK, TOUGH], undefined, { role: 'defender', homeroom: room_id });
+      Game.spawns[room_spawns[roomId]].createCreep([MOVE, MOVE, ATTACK, TOUGH], undefined, { role: 'defender', homeroom: roomId });
     } else if (upgraders.length < 3) {
-      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'upgrader', homeroom: room_id });
+      Game.spawns[room_spawns[roomId]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'upgrader', homeroom: roomId });
     } else if (builders.length < 1) {
-      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'builder', homeroom: room_id });
+      Game.spawns[room_spawns[roomId]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'builder', homeroom: roomId });
     } else if (logistics.length < 1) {
-      Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'logistics', homeroom: room_id });
+      Game.spawns[room_spawns[roomId]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'logistics', homeroom: roomId });
     } else {
       // Decide what to construct in each room
       for (const name in Game.spawns) {
