@@ -2,6 +2,7 @@ import roleHarvester from './harvester';
 import roleUpgrader from './upgrader';
 import roleBuilder from './builder';
 import roleLogistics from './logistics';
+import constructionManager from './constructionManager';
 
 module.exports.loop = () => {
   for (const name in Memory.creeps) {
@@ -27,6 +28,12 @@ module.exports.loop = () => {
     Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'builder' });
   } else if (logistics.length < 1) {
     Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], undefined, { role: 'logistics' });
+  } else {
+    // Decide what to construct in each room
+    for (const name in Game.spawns) {
+      const spawn = Game.spawns[name];
+      constructionManager.run(spawn.room);
+    }
   }
 
   if (Game.spawns.Spawn1.spawning) {
