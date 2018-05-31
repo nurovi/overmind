@@ -30,7 +30,7 @@ module.exports.loop = () => {
     const defenders = _.filter(Game.creeps, creep => (creep.memory.role === 'defender' && creep.memory.homeroom === roomId));
     const conquistadores = _.filter(Game.creeps, creep => creep.memory.role === 'conquistador');
 
-    console.log(`h,u,b, l: ${harvesters.length},${upgraders.length},${builders.length},${logistics.length}`);
+    console.log(`h,u,b,l,d,c: ${harvesters.length},${upgraders.length},${builders.length},${logistics.length},${defenders.length},${conquistadores.length}`);
 
     if (conquistadores.length < 1) {
       Game.spawns[room_spawns[room_id]].createCreep([WORK, CARRY, MOVE], undefined, { role: 'conquistador' });
